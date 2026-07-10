@@ -16,13 +16,16 @@ function Login(){
     }
 
     function entrar(){
+        //limpiar cualquier error si hayvarios intentos de login fallidos
         setError(false)
 
-        fetch("http://localhost:3000/login", {
+        //petición POST a la API para iniciar sesión y obtener el token
+        fetch("http://localhost:3000/login", { 
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ usuario, password })
+            body: JSON.stringify({ usuario, password }) //convertir a JSON el objeto con los datos del formulario
         })
+        //fetch solo rechaza la promesa si hay un error de red, comprobar el estado de la respuesta
         .then(respuesta => {
             if(!respuesta.ok){
                 throw new Error()
@@ -30,7 +33,7 @@ function Login(){
             return respuesta.json()
         })
         .then(({ token }) => {
-            guardarToken(token)
+            guardarToken(token) // guardar el token para mantener la sesión iniciada, funcion que viene de Tareas.jsx y se pasa a través del contexto
         })
         .catch(() => {
             setError(true)
@@ -38,6 +41,7 @@ function Login(){
         })
     }
 
+    //Login devuelve el formulario de login y un mensaje de error si el login falla
     return (
         <main>
             <h1>Iniciar sesión</h1>
@@ -54,7 +58,7 @@ function Login(){
 
             <button onClick={entrar}>Login</button>
 
-            { error && <p className="error">Usuario o contraseña incorrectos</p> }
+            { error && <p className="errorLogin">Usuario o contraseña incorrectos</p> }
         </main>
     )
 }

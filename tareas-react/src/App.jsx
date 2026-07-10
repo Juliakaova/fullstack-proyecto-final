@@ -1,15 +1,21 @@
 
+import { useContext } from "react"
+import { Navigate } from "react-router-dom"
+import Contexto from "./Contexto"
 
-function App() {
-  return <h1>Tareas</h1>
+function App(){
+
+    let { token, borrarToken } = useContext(Contexto)
+
+    //cuando se cierre sesión y deje de haber token se redirije a login
+    if(!token){
+        return <Navigate to="/login" />
+    }
+
+    return (
+        <main>
+            <h1>Tareas</h1>
+            <button onClick={borrarToken}>Cerrar sesión</button>
+        </main>
+    )
 }
-
-export default App
-
-
-
-/*
-function salir(){
-    localStorage.removeItem("token")   // borra la persistencia
-    guardarToken(null)                 // ...o setToken(null): estado a null → React repinta → el guard de App redirige a /login
-}*/

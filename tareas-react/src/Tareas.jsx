@@ -26,10 +26,16 @@ function Tareas(){
         localStorage.setItem("token", tokenNuevo)
         setToken(tokenNuevo)
     }
+    // borra el token de localStorage, cerrar sesión
+    function borrarToken(){
+    localStorage.removeItem("token")
+    setToken(null)
+    }
 
-    return <Contexto.Provider value={{ token, guardarToken }}>
+    return <Contexto.Provider value={{ token, guardarToken, borrarToken }}>
                 <RouterProvider router={router} />
            </Contexto.Provider>
+           
 }
 
 export default Tareas
