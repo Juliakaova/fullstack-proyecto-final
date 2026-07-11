@@ -100,7 +100,7 @@ servidor.post("/nueva", async (peticion, respuesta) => {
 
         let id = await crearTarea({ titulo: titulo.trim(), completada: false, usuario });
 
-        respuesta.json({ id });
+        respuesta.json({ id }); // devuelve solo el id de la tarea creada porque el resto se puede replicar en el front, ya que completada siempre es false y el titulo es el que envía el front
 
     }catch(e){
         respuesta.status(500);
