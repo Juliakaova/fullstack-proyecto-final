@@ -75,6 +75,8 @@ servidor.post("/login", async (peticion,respuesta) => {
 
 });
 
+servidor.use(verificar);
+
 //leer las tareas del usuario
 servidor.get("/tareas", async (peticion, respuesta) => {
     try{

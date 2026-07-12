@@ -16,7 +16,7 @@ function Login(){
     }
 
     function entrar(){
-        //limpiar cualquier error si hayvarios intentos de login fallidos
+        //limpiar cualquier error si hay intentos de login fallidos
         setError(false)
 
         //petición POST a la API para iniciar sesión y obtener el token
@@ -43,22 +43,27 @@ function Login(){
 
     //Login devuelve el formulario de login y un mensaje de error si el login falla
     return (
-        <main>
-            <h1>Iniciar sesión</h1>
+        <main className="login">
+            <h1>Tus tareas</h1>
+            <div className="inputsFormulario">
+                <input  type="text"
+                        placeholder="usuario"
+                        className={error ? "inputError" : ""}
+                        value={usuario}
+                        onChange={evento => setUsuario(evento.target.value)} />
 
-            <input  type="text"
-                    placeholder="usuario"
-                    value={usuario}
-                    onChange={evento => setUsuario(evento.target.value)} />
+                <input  type="password"
+                        placeholder="contraseña"
+                        className={error ? "inputError" : ""}
+                        value={password}
+                        onChange={evento => setPassword(evento.target.value)} />
 
-            <input  type="password"
-                    placeholder="contraseña"
-                    value={password}
-                    onChange={evento => setPassword(evento.target.value)} />
-
+                { error && <p className="errorLogin">Usuario o contraseña incorrectos</p> }
+            </div>
+            
             <button onClick={entrar}>Login</button>
 
-            { error && <p className="errorLogin">Usuario o contraseña incorrectos</p> }
+            
         </main>
     )
 }

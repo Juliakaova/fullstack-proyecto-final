@@ -1,1 +1,141 @@
 
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100dvh;
+    background-color: #beedcf;
+
+}
+
+/*CSS login movile first*/
+.login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100dvh;
+}
+
+.login .inputsFormulario {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color:#beedcf;
+    top: -6%;
+    gap: 2dvh;
+}
+
+.login .inputsFormulario input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.login h1{
+    position: relative;
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
+    top: -15%;
+    color: #315232;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.login .inputsFormulario input.inputError{
+    border: 1px solid red;
+}
+
+.errorLogin {
+    position: relative;
+    color: #315232;
+    font-size: 0.9rem;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.login button {
+    position: relative;
+    padding: 0.5rem 1rem;
+    font-size: 1.1rem;
+    background-color: #315232;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/*CSS App movile first*/
+
+.App {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    height: 100dvh;
+    gap : 2dvh;
+}
+
+
+.cerrarSesion {
+    position: Absolute;
+    top: 4dvh;
+    right: 3dvh;
+    padding: 0.4rem 0.5rem;
+    font-size: 1rem;
+    border: none;
+    box-shadow: 1px 2px 2px #3152327e;
+    color: #315232;
+    font-family: 'Segoe UI', sans-serif;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.contenido {
+    display: flex;
+    flex-direction: column;
+    width: 80dvw;
+    margin-top: 13dvh;
+    margin-left: 10dvw;
+    margin-right: 10dvw;
+    gap : 2dvh;
+}
+
+/*estilos formulario */
+div.nuevaTarea {
+    display: flex;
+    flex-direction: column;
+    gap: 1dvh;
+    width: 100%;
+}
+
+/*estilos tareas pendientes */
+div.tareasPendientes {
+    display: flex;
+    flex-direction: column;
+    gap: 2dvh;
+    background-color: #f3fff774;
+    padding: 1dvh;
+    border-radius: 5px;
+}
+div.tareasPendientes ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1dvh;
+    list-style-type: none;
+
+}
+
+/*estilos tareas completadas */
+div.tareasCompletadas {
+    display: flex;
+    flex-direction: column;
+    gap: 2dvh;
+    background-color: #f3fff774;
+    padding: 1dvh;
+    border-radius: 5px;
+}
