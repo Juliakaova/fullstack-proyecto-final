@@ -76,6 +76,37 @@ function App(){
             }
         })
       }
+
+      // marca o desmarca una tarea como completada 
+      function completarTarea(id, completada){
+          fetch("http://localhost:3000/actualizar/" +  id, {
+              method: "PATCH",
+              headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": "Bearer " + token
+              },
+              body: JSON.stringify({ completada })
+          })
+          .then(respuesta => {
+              if(respuesta.status == 403){
+                  throw new Error("sesion")
+              }
+              if(!respuesta.ok){
+                  throw new Error("peticion")
+              }
+              // array nuevo: la tarea afectada se copia con el campo cambiado, el resto pasan tal cual
+              setTareas(tareas.map(t =>
+                  t._id == id ? { ...t, completada } : t
+              ))
+          })
+          .catch(error => {
+              if(error.message == "sesion"){
+                  borrarToken()
+              }else{
+                  setErrorCrear(true)
+              }
+          })
+      }
     
 
     //cuando se cierre sesión y deje de haber token se redirije a login
@@ -88,23 +119,44 @@ function App(){
             <h1>Tareas</h1>
             <button onClick={borrarToken}>Cerrar sesión</button>
 
-            //
+            {/* formulario para añadir una nueva tarea, limitar a 100 caracteres ya que en las validaciones no se aceptan más caracteres y así  mejorar la experiencia de usuario, que no escriba de más y luego le salga un error al enviar el formulario*/}
             <input  type="text"
                     placeholder="Añadir tarea"
-                    maxLength={100} // limitar a 100 caracteres ya que en las validaciones no se aceptan más caracteres y así  mejorar la experiencia de usuario, que no escriba de más y luego le salga un error al enviar el formulario
+                    maxLength={100} 
                     value={tareaNueva}
                     onChange={evento => setTareaNueva(evento.target.value)} />
 
             <button onClick={crearTarea}>Crear</button>
             { errorCrear && <p className="errorCrear">No se pudo crear la tarea</p> }
 
+            {/* lista de tareas pendientes, se filtra el array de tareas para mostrar solo las pendientes, y se mapea para crear un li por cada tarea */}
+            <h2>Pendientes</h2>
             <ul>
-                { tareas.map(tarea =>
-                    <li key={tarea._id}>{tarea.titulo}</li>
+                { tareas.filter(tarea => !tarea.completada).map(tarea =>
+                    <li key={tarea._id}>
+                        <input  type="checkbox"
+                                checked={tarea.completada}
+                                onChange={() => completarTarea(tarea._id, !tarea.completada)} />
+                        <span>{tarea.titulo}</span>
+                    </li>
                 )}
             </ul>
+            { tareas.filter(t => !t.completada).length == 0 && <p>No hay tareas pendientes</p> } {/* si no hay tareas pendientes se muestra un mensaje, aunque haya tareas completadas */}
 
-            { tareas.length == 0 && <p>No hay tareas todavía</p> }
+            {/* lista de tareas completadas, se filtra el array de tareas para mostrar solo las completadas, y se mapea para crear un li por cada tarea */}
+            <h2>Completadas</h2>
+            <ul>
+                { tareas.filter(tarea => tarea.completada).map(tarea =>
+                    <li key={tarea._id}>
+                        <input  type="checkbox"
+                                checked={tarea.completada}
+                                onChange={() => completarTarea(tarea._id, !tarea.completada)} />
+                        <span className="completada">{tarea.titulo}</span>
+                    </li>
+                )}
+            </ul>
+            { tareas.filter(t => t.completada).length == 0 && <p>No hay tareas completadas</p> } {/* si no hay tareas completadas se muestra un mensaje, aunque haya tareas pendientes */}
+
         </main>
     )
 }
