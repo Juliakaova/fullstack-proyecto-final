@@ -37,7 +37,7 @@ function App(){
         })
     }, [token]) 
 
-
+    //Para cerrar sesión, limpiar el array de tareas y borrar el token, la idea de borrar las tareas es para que si se inicia otra sesión sin recargar la página no se vean las tareas de la sesión anterior
     function cerrarSesion(){
         setTareas([])
         borrarToken()
@@ -154,7 +154,7 @@ function App(){
                             value={tareaNueva}
                             onChange={evento => setTareaNueva(evento.target.value)} />
 
-                    <button onClick={crearTarea}>Crear</button>
+                    <button className="crear" onClick={crearTarea}>Crear</button>
                     { errorCrear && <p className="errorCrear">No se pudo crear la tarea</p> }
                 </div>
 
