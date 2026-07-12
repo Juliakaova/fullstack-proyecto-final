@@ -77,15 +77,15 @@ function App(){
         })
       }
 
-      // marca o desmarca una tarea como completada 
-      function completarTarea(id, completada){
+      // marcar o desmarcar una tarea como completada. Llegan el id y el valor de completada (true o false), al que llamo completa porque personalmente me facilita la lectura de código que no sea el mismo nombre que la propiedad del objeto tarea
+      function completarTarea(id, completa){
           fetch("http://localhost:3000/actualizar/" +  id, {
               method: "PATCH",
               headers: {
                   "Content-Type": "application/json",
                   "Authorization": "Bearer " + token
               },
-              body: JSON.stringify({ completada })
+              body: JSON.stringify({ completada: completa })
           })
           .then(respuesta => {
               if(respuesta.status == 403){
@@ -94,9 +94,9 @@ function App(){
               if(!respuesta.ok){
                   throw new Error("peticion")
               }
-              // array nuevo: la tarea afectada se copia con el campo cambiado, el resto pasan tal cual
+              // la tarea afectada se copia con cambiando el valor de la variable completada a true o false (hecha o no), el resto pasan tal cual. Se repintan sin recargar.
               setTareas(tareas.map(t =>
-                  t._id == id ? { ...t, completada } : t
+                  t._id == id ? { ...t, completada: completa } : t
               ))
           })
           .catch(error => {
@@ -107,7 +107,31 @@ function App(){
               }
           })
       }
-    
+      
+      // eliminar una tarea en el backend y quitarla de la lista sin recargar
+      function borrarTarea(id){
+          fetch("http://localhost:3000/borrar/" + id, {
+              method: "DELETE",
+              headers: { "Authorization": "Bearer " + token }
+          })
+          .then(respuesta => {
+              if(respuesta.status == 403){
+                  throw new Error("sesion")
+              }
+              if(!respuesta.ok){
+                  throw new Error("peticion")
+              }
+              // filtramos creando un nuevo array de tareas pasan el filtro las que no coinciden con el id recibido
+              setTareas(tareas.filter(tarea => tarea._id != id))
+          })
+          .catch(error => {
+              if(error.message == "sesion"){
+                  borrarToken()
+              }else{
+                  setErrorCrear(true)
+              }
+          })
+      }
 
     //cuando se cierre sesión y deje de haber token se redirije a login
     if(!token){
@@ -138,6 +162,7 @@ function App(){
                                 checked={tarea.completada}
                                 onChange={() => completarTarea(tarea._id, !tarea.completada)} />
                         <span>{tarea.titulo}</span>
+                        <button onClick={() => borrarTarea(tarea._id)}>Borrar</button>
                     </li>
                 )}
             </ul>
@@ -152,6 +177,7 @@ function App(){
                                 checked={tarea.completada}
                                 onChange={() => completarTarea(tarea._id, !tarea.completada)} />
                         <span className="completada">{tarea.titulo}</span>
+                        <button onClick={() => borrarTarea(tarea._id)}>Borrar</button>
                     </li>
                 )}
             </ul>
