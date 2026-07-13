@@ -46,7 +46,7 @@ function Login(){
         <main className="login">
             <h1>Tus tareas</h1>
             <div className="inputsFormulario">
-                <input  type="text"
+                <input type="text"
                         placeholder="usuario"
                         className={error ? "inputError" : ""}
                         value={usuario}

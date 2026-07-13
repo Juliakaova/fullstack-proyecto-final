@@ -147,52 +147,59 @@ function App(){
             <button className="cerrarSesion" onClick={cerrarSesion}>Cerrar sesión</button>
             <section className="contenido">  
             {/* formulario para añadir una nueva tarea, limitar a 100 caracteres ya que en las validaciones no se aceptan más caracteres y así  mejorar la experiencia de usuario, que no escriba de más y luego le salga un error al enviar el formulario*/}
+            <div>
                 <div className="nuevaTarea">
-                    <input  type="text"
+                    <input className="inputTarea " type="text"
                             placeholder="Añadir tarea"
                             maxLength={100} 
                             value={tareaNueva}
                             onChange={evento => setTareaNueva(evento.target.value)} />
 
                     <button className="crear" onClick={crearTarea}>Crear</button>
-                    { errorCrear && <p className="errorCrear">No se pudo crear la tarea</p> }
+                    
                 </div>
-
+                { errorCrear && <p className="errorCrear">No se pudo crear la tarea</p> }
+              </div>
                 {/* lista de tareas pendientes, se filtra el array de tareas para mostrar solo las pendientes, y se mapea para crear un li por cada tarea */}
+                <div className="tareasTodas">
+                    <div className="tareasPendientes">
+                        <h2>Tareas pendientes</h2>
+                        <ul>
+                            { tareas.filter(tarea => !tarea.completada).map(tarea =>
+                                <li key={tarea._id}>
+                                    <div className="inputYSpan">
+                                      <input  type="checkbox"
+                                              checked={tarea.completada}
+                                              onChange={() => completarTarea(tarea._id, !tarea.completada)} />
+                                      <span>{tarea.titulo}</span>
+                                    </div>
+                                    <button className="borrar" onClick={() => borrarTarea(tarea._id)}>Borrar</button>
+                                </li>
+                            )}
+                        </ul>
 
-                <div className="tareasPendientes">
-                    <h2>Tareas pendientes</h2>
-                    <ul>
-                        { tareas.filter(tarea => !tarea.completada).map(tarea =>
-                            <li key={tarea._id}>
-                                <input  type="checkbox"
-                                        checked={tarea.completada}
-                                        onChange={() => completarTarea(tarea._id, !tarea.completada)} />
-                                <span>{tarea.titulo}</span>
-                                <button onClick={() => borrarTarea(tarea._id)}>Borrar</button>
-                            </li>
-                        )}
-                    </ul>
+                        { tareas.filter(t => !t.completada).length == 0 && <p className="vacio">No hay tareas pendientes</p> } {/* si no hay tareas pendientes se muestra un mensaje, aunque haya tareas completadas */}
+                    </div>
+                            
+                    {/* lista de tareas completadas, se filtra el array de tareas para mostrar solo las completadas, y se mapea para crear un li por cada tarea */}
 
-                    { tareas.filter(t => !t.completada).length == 0 && <p>No hay tareas pendientes</p> } {/* si no hay tareas pendientes se muestra un mensaje, aunque haya tareas completadas */}
-                </div>
-                        
-                {/* lista de tareas completadas, se filtra el array de tareas para mostrar solo las completadas, y se mapea para crear un li por cada tarea */}
-
-                <div className="tareasCompletadas">
-                    <h2>Completadas</h2>
-                    <ul>
-                        { tareas.filter(tarea => tarea.completada).map(tarea =>
-                            <li key={tarea._id}>
-                                <input  type="checkbox"
-                                        checked={tarea.completada}
-                                        onChange={() => completarTarea(tarea._id, !tarea.completada)} />
-                                <span className="completada">{tarea.titulo}</span>
-                                <button onClick={() => borrarTarea(tarea._id)}>Borrar</button>
-                            </li>
-                        )}
-                    </ul>
-                    { tareas.filter(t => t.completada).length == 0 && <p>No hay tareas completadas</p> } {/* si no hay tareas completadas se muestra un mensaje, aunque haya tareas pendientes */}
+                    <div className="tareasCompletadas">
+                        <h2>Completadas</h2>
+                        <ul>
+                            { tareas.filter(tarea => tarea.completada).map(tarea =>
+                                <li key={tarea._id}>
+                                    <div className="inputYSpan">
+                                      <input  type="checkbox"
+                                              checked={tarea.completada}
+                                              onChange={() => completarTarea(tarea._id, !tarea.completada)} />
+                                      <span className="completada">{tarea.titulo}</span>
+                                    </div>
+                                    <button className="borrar" onClick={() => borrarTarea(tarea._id)}>Borrar</button>
+                                </li>
+                            )}
+                        </ul>
+                        { tareas.filter(t => t.completada).length == 0 && <p className="vacio">No hay tareas completadas</p> } {/* si no hay tareas completadas se muestra un mensaje, aunque haya tareas pendientes */}
+                    </div>
                 </div>
             </section>
 
