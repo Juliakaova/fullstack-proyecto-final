@@ -20,7 +20,7 @@ function App(){
             return   // sin token no pedimos nada salta a la redirección a login
         }
 
-        fetch("http://localhost:3000/tareas", {
+        fetch(import.meta.env.VITE_API_URL + "/tareas", {
             headers: { "Authorization": "Bearer " + token }
         })
         .then(respuesta => {
@@ -49,7 +49,7 @@ function App(){
             return
         }
 
-        fetch("http://localhost:3000/nueva", {
+        fetch(import.meta.env.VITE_API_URL + "/nueva", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -83,7 +83,7 @@ function App(){
 
       // marcar o desmarcar una tarea como completada. Llegan el id y el valor de completada (true o false), al que llamo completa porque personalmente me facilita la lectura de código que no sea el mismo nombre que la propiedad del objeto tarea
       function completarTarea(id, completa){
-          fetch("http://localhost:3000/actualizar/" +  id, {
+          fetch(import.meta.env.VITE_API_URL + "/actualizar/" + id, {
               method: "PATCH",
               headers: {
                   "Content-Type": "application/json",
@@ -114,7 +114,7 @@ function App(){
       
       // eliminar una tarea en el backend y quitarla de la lista sin recargar
       function borrarTarea(id){
-          fetch("http://localhost:3000/borrar/" + id, {
+          fetch(import.meta.env.VITE_API_URL + "/borrar/" + id, {
               method: "DELETE",
               headers: { "Authorization": "Bearer " + token }
           })

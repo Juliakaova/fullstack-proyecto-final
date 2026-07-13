@@ -20,7 +20,7 @@ function Login(){
         setError(false)
 
         //petición POST a la API para iniciar sesión y obtener el token
-        fetch("http://localhost:3000/login", { 
+        fetch(import.meta.env.VITE_API_URL + "/login", { 
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ usuario, password }) //convertir a JSON el objeto con los datos del formulario
@@ -45,18 +45,20 @@ function Login(){
     return (
         <main className="login">
             <h1>Tus tareas</h1>
-            <div className="inputsFormulario">
-                <input type="text"
-                        placeholder="usuario"
-                        className={error ? "inputError" : ""}
-                        value={usuario}
-                        onChange={evento => setUsuario(evento.target.value)} />
+            <div className="loginFormulario">
+                <div className="inputsFormulario">
+                    <input type="text"
+                            placeholder="usuario"
+                            className={error ? "inputError" : ""}
+                            value={usuario}
+                            onChange={evento => setUsuario(evento.target.value)} />
 
-                <input  type="password"
-                        placeholder="contraseña"
-                        className={error ? "inputError" : ""}
-                        value={password}
-                        onChange={evento => setPassword(evento.target.value)} />
+                    <input  type="password"
+                            placeholder="contraseña"
+                            className={error ? "inputError" : ""}
+                            value={password}
+                            onChange={evento => setPassword(evento.target.value)} />
+                </div>
 
                 { error && <p className="errorLogin">Usuario o contraseña incorrectos</p> }
             </div>
