@@ -19,7 +19,7 @@ const router = createBrowserRouter([
 //gestión del token
 function Tareas(){
 
-    //Almacenamiento del token en localStorage para mantener la sesión iniciada aunque se cierre el navegador, solución desarrollada con IA
+    //Almacenamiento del token en localStorage para mantener la sesión iniciada aunque se cierre el navegador
     let [token, setToken] = useState(localStorage.getItem("token"))
 
     function guardarToken(tokenNuevo){
