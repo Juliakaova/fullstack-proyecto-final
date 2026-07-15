@@ -8,7 +8,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { leerTareas, crearTarea, borrarTarea, actualizarTarea, buscarUsuario } from "./db.js";
 
-//-------- Middleware para verificar el token y obtener el id del usuario, si todo está ok pasamos al resto de middlewares--------
+//-------- Middleware para verificar el token y obtener el id del usuario--------
 
 async function verificar(peticion,respuesta,siguiente){
     if(!peticion.headers.authorization){
