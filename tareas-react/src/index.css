@@ -10,7 +10,7 @@ body {
 
 }
 
-/*CSS login movile first*/
+/*CSS login mobile first*/
 .login {
     display: flex;
     flex-direction: column;
@@ -80,7 +80,7 @@ body {
     cursor: pointer;
 }
 
-/*CSS App movile first*/
+/*CSS App mobile first*/
 
 .App {
     display: flex;
